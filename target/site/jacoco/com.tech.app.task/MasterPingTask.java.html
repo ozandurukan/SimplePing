@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>MasterPingTask.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SimplePing</a> &gt; <a href="index.source.html" class="el_package">com.tech.app.task</a> &gt; <span class="el_source">MasterPingTask.java</span></div><h1>MasterPingTask.java</h1><pre class="source lang-java linenums">package com.tech.app.task;
+
+import java.util.TimerTask;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.tech.app.AppConstants;
+import com.tech.app.exception.GeneralPingException;
+import com.tech.app.thread.ICMPPingThread;
+import com.tech.app.thread.TCPPingThread;
+import com.tech.app.thread.TracertThread;
+
+public class MasterPingTask extends TimerTask {
+
+<span class="nc" id="L19">	static final Logger LOGGER = LoggerFactory.getLogger(MasterPingTask.class);</span>
+	private String jobType;
+
+	@Override
+	public void run() {
+
+		try {
+			Runnable thread;
+<span class="nc" id="L27">			ExecutorService pool = Executors</span>
+<span class="nc" id="L28">			.newFixedThreadPool(AppConstants.HOST_NAMES.size());</span>
+<span class="nc bnc" id="L29" title="All 2 branches missed.">			for (String hostName : AppConstants.HOST_NAMES) {</span>
+<span class="nc bnc" id="L30" title="All 2 branches missed.">				if (AppConstants.ICMP_JOB_TYPE.equals(jobType)) {</span>
+<span class="nc" id="L31">					thread = new ICMPPingThread(hostName);</span>
+<span class="nc bnc" id="L32" title="All 2 branches missed.">				} else if (AppConstants.TCP_JOB_TYPE.equals(jobType)) {</span>
+<span class="nc" id="L33">					thread = new TCPPingThread(hostName);</span>
+<span class="nc bnc" id="L34" title="All 2 branches missed.">				} else if (AppConstants.TRCRT_JOB_TYPE.equals(jobType)) {</span>
+<span class="nc" id="L35">					thread = new TracertThread(hostName);</span>
+<span class="nc" id="L36">				} else {</span>
+<span class="nc" id="L37">					throw new GeneralPingException(</span>
+<span class="nc" id="L38">							&quot;Unimplemented jobtype found in app config: &quot;</span>
+<span class="nc" id="L39">									+ jobType);</span>
+				}
+<span class="nc" id="L41">				pool.execute(thread);</span>
+			}
+
+<span class="nc" id="L44">			pool.shutdown();</span>
+			// we wait until all the threads are done
+<span class="nc" id="L46">			pool.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);</span>
+<span class="nc" id="L47">		} catch (InterruptedException e) {</span>
+<span class="nc" id="L48">			LOGGER.error(&quot;Thread exception!&quot;, e);</span>
+<span class="nc" id="L49">		} catch (Exception e) {</span>
+<span class="nc" id="L50">			LOGGER.error(&quot;General exception!&quot;, e);</span>
+		}
+
+<span class="nc" id="L53">	}</span>
+
+	public String getJobType() {
+<span class="nc" id="L56">		return jobType;</span>
+	}
+
+	public void setJobType(String jobType) {
+<span class="nc" id="L60">		this.jobType = jobType;</span>
+<span class="nc" id="L61">	}</span>
+
+	public MasterPingTask(String jobType) {
+<span class="nc" id="L64">		super();</span>
+<span class="nc" id="L65">		this.jobType = jobType;</span>
+<span class="nc" id="L66">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

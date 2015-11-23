@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>AppConstants.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SimplePing</a> &gt; <a href="index.source.html" class="el_package">com.tech.app</a> &gt; <span class="el_source">AppConstants.java</span></div><h1>AppConstants.java</h1><pre class="source lang-java linenums">package com.tech.app;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Properties;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class AppConstants {
+	public static final String ICMP_JOB_TYPE = &quot;ICMP&quot;;
+	public static final String TCP_JOB_TYPE = &quot;TCP&quot;;
+	public static final String TRCRT_JOB_TYPE = &quot;TRACERT&quot;;
+	public static final List&lt;String&gt; HOST_NAMES;
+	public static final List&lt;String&gt; JOB_TYPE_LIST;
+	public static final String ICMP_PING_COMMAND;
+	public static final String REPORT_URL;
+	public static final Integer HTTP_TIMEOUT;
+	public static final Integer INITIAL_DELAY;
+	public static final Integer INTERVAL;
+	public static final Long TCP_TIME_THRESHOLD;
+	public static final String TRACERT_COMMAND;
+	public static final	Integer COMMAND_TIMEOUT_IN_SEC;
+<span class="fc" id="L26">	static final Logger LOGGER = LoggerFactory.getLogger(AppConstants.class);</span>
+	
+	static {
+<span class="fc" id="L29">		Properties prop = readPropertyFile();</span>
+<span class="fc" id="L30">		HOST_NAMES = Arrays.asList(prop.getProperty(&quot;hostNames&quot;).split(&quot;;&quot;));</span>
+<span class="fc" id="L31">		JOB_TYPE_LIST = Arrays.asList(prop.getProperty(&quot;jobTypeList&quot;).split(&quot;;&quot;));</span>
+<span class="fc" id="L32">		ICMP_PING_COMMAND = prop.getProperty(&quot;icmpPingCommand&quot;);</span>
+<span class="fc" id="L33">		REPORT_URL = prop.getProperty(&quot;reportUrl&quot;);</span>
+<span class="fc" id="L34">		HTTP_TIMEOUT = Integer.parseInt(prop.getProperty(&quot;httpTimeout&quot;));</span>
+<span class="fc" id="L35">		INITIAL_DELAY = Integer.parseInt(prop.getProperty(&quot;initialDelay&quot;));</span>
+<span class="fc" id="L36">		INTERVAL = Integer.parseInt(prop.getProperty(&quot;interval&quot;));</span>
+<span class="fc" id="L37">		TCP_TIME_THRESHOLD = Long.parseLong(prop.getProperty(&quot;tcpTimeThreshold&quot;));</span>
+<span class="fc" id="L38">		TRACERT_COMMAND = prop.getProperty(&quot;tracertCommand&quot;);</span>
+<span class="fc" id="L39">		COMMAND_TIMEOUT_IN_SEC = Integer.parseInt(prop.getProperty(&quot;commandTimeoutInSec&quot;));</span>
+<span class="fc" id="L40">	}</span>
+
+<span class="nc" id="L42">	private AppConstants() {</span>
+		
+<span class="nc" id="L44">	}</span>
+	private static Properties readPropertyFile() {
+<span class="fc" id="L46">		Properties prop = new Properties();</span>
+<span class="fc" id="L47">		InputStream input = null;</span>
+
+		try {
+<span class="fc" id="L50">			String filename = &quot;config.properties&quot;;</span>
+<span class="fc" id="L51">			input = App.class.getClassLoader().getResourceAsStream(filename);</span>
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">			if (input == null) {</span>
+<span class="nc" id="L53">				throw new IOException(&quot;file not found!&quot;);</span>
+			}
+
+<span class="fc" id="L56">			prop.load(input);</span>
+<span class="fc" id="L57">			LOGGER.debug(&quot;props loaded!&quot;);</span>
+
+<span class="pc" id="L59">		} catch (IOException ex) {</span>
+<span class="nc" id="L60">			LOGGER.error(&quot;Exception!&quot;,ex);</span>
+<span class="nc" id="L61">		} finally {</span>
+<span class="pc bpc" id="L62" title="5 of 6 branches missed.">			if (input != null) {</span>
+				try {
+<span class="pc" id="L64">					input.close();</span>
+<span class="pc" id="L65">				} catch (IOException e) {</span>
+<span class="nc" id="L66">					LOGGER.error(&quot;Exception!&quot;,e);</span>
+				}
+			}
+<span class="nc" id="L69">		}</span>
+<span class="fc" id="L70">		return prop;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

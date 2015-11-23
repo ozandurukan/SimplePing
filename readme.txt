@@ -1,0 +1,5 @@
+-You can run the application with : java -cp target\SimplePing-jar-with-dependencies.jar com.tech.app.App
+-You can find Sonar Analysis report inside the RAR. There is no blocker and critical issue.
+-Although code coverage shows 65%, it is actually a lot more because JaCoCo plugin doesnt work well with PowerMockito library.
+-When you run the application, there will be 4 log files, 1 is AppLog and 3 other are for the 3 pinging processes. 
+-I left the log level as Debug so that it can be seen what is going on in detail. 

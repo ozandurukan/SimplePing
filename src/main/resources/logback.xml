@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+        <pattern>%d{HH:mm:ss.SSS}  %-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+    </encoder>
+  </appender>
+  
+  <appender name="ICMPPing" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>ICMPPingLogFile.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>ICMPPingLogFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>5</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS}  %-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+  </appender>
+  
+  <appender name="TCPPing" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>TCPPingLogFile.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>TCPPingLogFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>5</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS}  %-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+  </appender>
+  
+  <appender name="Tracert" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>TracertLogFile.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>TracertLogFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>5</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS}  %-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+  </appender>
+  
+  <appender name="AppLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>AppLog.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>AppLog.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>5</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS}  %-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+  </appender>
+  
+  <logger name="com.tech.app.thread.ICMPPingThread" level="DEBUG" additivity="false">
+  	<appender-ref ref="ICMPPing" />
+  </logger>
+  
+   <logger name="com.tech.app.thread.TCPPingThread" level="DEBUG" additivity="false">
+  	<appender-ref ref="TCPPing" />
+  </logger>
+  
+  <logger name="com.tech.app.thread.TracertThread" level="DEBUG" additivity="false">
+  	<appender-ref ref="Tracert" />
+  </logger>
+  
+  <logger name="com.tech.app" level="DEBUG" additivity="false">
+  	<appender-ref ref="AppLog" />
+  </logger>
+  
+
+  <root level="WARN">
+    <appender-ref ref="STDOUT" />
+    
+  </root>
+</configuration>

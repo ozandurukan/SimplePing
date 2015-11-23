@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>TCPPingThread.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SimplePing</a> &gt; <a href="index.source.html" class="el_package">com.tech.app.thread</a> &gt; <span class="el_source">TCPPingThread.java</span></div><h1>TCPPingThread.java</h1><pre class="source lang-java linenums">package com.tech.app.thread;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.tech.app.AppConstants;
+import com.tech.app.exception.HTTPRequestException;
+import com.tech.app.service.CacheService;
+import com.tech.app.service.HTTPRequestService;
+import com.tech.app.service.UnixCommandService;
+
+public class TCPPingThread extends AbstractPingThread {
+
+<span class="fc" id="L14">	static final Logger LOGGER = LoggerFactory.getLogger(TCPPingThread.class);</span>
+<span class="fc" id="L15">	static final String prefix = &quot;http://www.&quot;;</span>
+
+	@Override
+	public void run() {
+<span class="fc" id="L19">		LOGGER.debug(&quot;invoking TCP Ping for host name: {}&quot;, hostName);</span>
+		// We set the status -1 for timeouts
+<span class="fc" id="L21">		Integer statusCode = -1;</span>
+<span class="fc" id="L22">		Long duration = 0L;</span>
+		try {
+<span class="fc" id="L24">			Long startTime = System.currentTimeMillis();</span>
+<span class="fc" id="L25">			statusCode = httpRequestService.sendHttpGetRequest(prefix + hostName);</span>
+<span class="fc" id="L26">			duration = System.currentTimeMillis() - startTime;</span>
+<span class="fc" id="L27">		} catch (HTTPRequestException e) {</span>
+<span class="fc" id="L28">			LOGGER.error(&quot;Exception for host: {}&quot;, hostName, e);</span>
+		} 
+<span class="fc" id="L30">		String result = new StringBuilder().append(&quot;hostName: &quot;)</span>
+<span class="fc" id="L31">				.append(hostName).append(&quot; statusCode: &quot;).append(statusCode)</span>
+<span class="fc" id="L32">				.append(&quot; responseTime: &quot;).append(duration).toString();</span>
+<span class="fc" id="L33">		saveLastResult(AppConstants.TCP_JOB_TYPE, result);</span>
+<span class="fc" id="L34">		LOGGER.debug(result);</span>
+<span class="fc bfc" id="L35" title="All 4 branches covered.">		if (statusCode != 200 || duration &gt; AppConstants.TCP_TIME_THRESHOLD) {</span>
+			try {
+<span class="fc" id="L37">				sendReport();</span>
+<span class="fc" id="L38">			} catch (HTTPRequestException e) {</span>
+<span class="fc" id="L39">				LOGGER.error(&quot;Error while sending report for host: {}&quot;,</span>
+<span class="fc" id="L40">						hostName, e);</span>
+			}
+		}
+<span class="fc" id="L43">	}</span>
+
+	public TCPPingThread(String hostName) {
+<span class="nc" id="L46">		super(hostName);</span>
+<span class="nc" id="L47">	}</span>
+
+	public TCPPingThread(String hostName, CacheService cacheService,
+			HTTPRequestService httpRequestService,
+			UnixCommandService unixCommandService) {
+<span class="fc" id="L52">		super(hostName, cacheService, httpRequestService, unixCommandService);</span>
+<span class="fc" id="L53">	}</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

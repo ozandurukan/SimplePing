@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ReportObject.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SimplePing</a> &gt; <a href="index.source.html" class="el_package">com.tech.app.model</a> &gt; <span class="el_source">ReportObject.java</span></div><h1>ReportObject.java</h1><pre class="source lang-java linenums">package com.tech.app.model;
+
+<span class="fc" id="L3">public class ReportObject {</span>
+	String hostName;
+	String icmpPingResult;
+	String tcpPingResult;
+	String tracertResult;
+	public String getHostName() {
+<span class="nc" id="L9">		return hostName;</span>
+	}
+	public void setHostName(String hostName) {
+<span class="fc" id="L12">		this.hostName = hostName;</span>
+<span class="fc" id="L13">	}</span>
+	public String getIcmpPingResult() {
+<span class="nc" id="L15">		return icmpPingResult;</span>
+	}
+	public void setIcmpPingResult(String icmpPingResult) {
+<span class="fc" id="L18">		this.icmpPingResult = icmpPingResult;</span>
+<span class="fc" id="L19">	}</span>
+	public String getTcpPingResult() {
+<span class="nc" id="L21">		return tcpPingResult;</span>
+	}
+	public void setTcpPingResult(String tcpPingResult) {
+<span class="fc" id="L24">		this.tcpPingResult = tcpPingResult;</span>
+<span class="fc" id="L25">	}</span>
+	public String getTracertResult() {
+<span class="nc" id="L27">		return tracertResult;</span>
+	}
+	public void setTracertResult(String tracertResult) {
+<span class="fc" id="L30">		this.tracertResult = tracertResult;</span>
+<span class="fc" id="L31">	}</span>
+	@Override
+	public String toString() {
+<span class="nc" id="L34">		return &quot;ReportObject [hostName=&quot; + hostName + &quot;, icmpPingResult=&quot;</span>
+<span class="nc" id="L35">				+ icmpPingResult + &quot;, tcpPingResult=&quot; + tcpPingResult</span>
+<span class="nc" id="L36">				+ &quot;, tracertResult=&quot; + tracertResult + &quot;]&quot;;</span>
+	}
+	
+	
+	
+}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
