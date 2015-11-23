@@ -1,3 +1,4 @@
+-This application is a simple ping application that pings given servers in 3 different ways.
 -You can run the application with : java -cp target\SimplePing-jar-with-dependencies.jar com.tech.app.App
 -You can find Sonar Analysis report inside the RAR. There is no blocker and critical issue.
 -Although code coverage shows 65%, it is actually a lot more because JaCoCo plugin doesnt work well with PowerMockito library.
